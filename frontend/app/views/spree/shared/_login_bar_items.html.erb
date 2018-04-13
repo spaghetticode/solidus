@@ -1,1 +1,4 @@
 <%# solidus_auth_devise or a custom auth system can replace this partial %>
+<% if spree_current_user %>
+  <li><%= link_to Spree.t(:my_account), spree.account_path %></li>
+<% end %>
