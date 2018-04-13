@@ -3,9 +3,12 @@
 <div data-hook="account_summary" class="account-summary">
   <dl id="user-info">
     <dt><%= Spree.t(:email) %></dt>
-    <% if spree.respond_to? :edit_account_path %>
-      <dd><%= @user.email %> (<%= link_to Spree.t(:edit), spree.edit_account_path %>)</dd>
-    <% end %>
+    <dd>
+      <%= @user.email %>
+      <% if spree.respond_to? :edit_account_path %>
+        (<%= link_to Spree.t(:edit), spree.edit_account_path %>)
+      <% end %>
+    </dd>
   </dl>
 </div>
 

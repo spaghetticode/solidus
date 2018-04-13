@@ -11,12 +11,13 @@ class Spree::UsersController < Spree::StoreController
   end
 
   private
-    def load_object
-      @user ||= spree_current_user
-      authorize! params[:action].to_sym, @user
-    end
 
-    def accurate_title
-      Spree.t(:my_account)
-    end
+  def load_object
+    @user ||= spree_current_user
+    authorize! params[:action].to_sym, @user
+  end
+
+  def accurate_title
+    Spree.t(:my_account)
+  end
 end
