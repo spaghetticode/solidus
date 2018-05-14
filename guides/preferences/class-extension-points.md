@@ -28,7 +28,7 @@ extension point for this:
 class_name_attribute :searcher_class, default: 'Spree::Core::Search::Base'
 ```
 
-Note that if that you do not use this extension point, then `searcher_class`
+Note that if you do not use this extension point, then `searcher_class`
 defaults to using `Spree::Core::Search::Base`.
 
 Extending the searcher is a multi-step process:
@@ -75,7 +75,7 @@ end
 Now, when search is built it uses your extended `MyStore::ProductSearch`
 functionality instead of the default functionality.
 
-[search-base]: https://github.com/solidusio/solidus/blob/master/core/lib/spree/base.rb
+[search-base]: https://github.com/solidusio/solidus/blob/v2.4/core/lib/spree/core/search/base.rb
 
 ## Generating extension points
 

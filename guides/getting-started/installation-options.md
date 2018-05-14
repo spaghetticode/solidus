@@ -26,19 +26,19 @@ a production system.
 When you run the `spree:install` generator without arguments, it runs
 migrations, adds sample data, and seeds your database:
 
-```shell
+```bash
 rails generate spree:install
 ```
 
 You can use command arguments to skip any of these steps of the generator:
 
-```shell
+```bash
 rails generate spree:install --migrate=false --sample=false --seed=false
 ```
 
 If you want to perform these tasks later, you can use these commands.
 
-```shell
+```bash
 bundle exec rake railties:install:migrations       # installs migrations
 bundle exec rake db:migrate                        # runs migrations
 bundle exec rake db:seed                           # seeds your database
@@ -48,7 +48,7 @@ bundle exec rake spree_sample:load                 # loads sample data
 If you use `solidus_auth_devise` for user authentication, you can also install
 and run its migrations, then seed the database, separately:
 
-```shell
+```bash
 bundle exec rake solidus_auth:install:migrations   # installs solidus_auth_devise migrations
 bundle exec rake db:migrate                        # runs solidus_auth_devise migrations
 bundle exec rake db:seed                           # seeds your database
@@ -56,7 +56,7 @@ bundle exec rake db:seed                           # seeds your database
 
 ## Development environment performance gains
 
-You may noticed that your Solidus store runs slowly in development mode. You can
+You may notice that your Solidus store runs slowly in development mode. You can
 change some configuration to get performance gains.
 
 ### Turn off asset debugging
@@ -84,7 +84,7 @@ gem 'turbolinks', '~> 5.0.0'
 Then, enable Turbolinks in the backend by appending these lines to the
 JavaScript manifest at `vendor/assets/spree/backend/all/js`:
 
-```ruby
+```js
 //= require turbolinks
 //= require backend/app/assets/javascripts/spree/backend/turbolinks-integration.js
 ```

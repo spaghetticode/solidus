@@ -1,4 +1,4 @@
-# Overview of taxation
+# Overview
 
 Solidus's taxation system supports both sales- and VAT-style taxes. You can use
 tax rates, tax categories, and the built-in tax calculator to handle your
@@ -11,8 +11,8 @@ if a store sells internationally:
 - Orders may include products with different tax categories or rates.
 - Shipments may require special calculations if you are shipping to or from
   locations where there are specific taxation rules for shipments.
-- Taxes may or may not be included in a product's price price depending on a
-  country's taxation rules.
+- Taxes may or may not be included in a product's price depending on a country's
+  taxation rules.
 
 <!-- TODO:
   - Add links to the locations guide and specifically the [zones](#) article.
@@ -79,7 +79,7 @@ An order's `tax_address` can – through [duck typing][duck-typing] – be a
 `Spree::TaxLocation` instead of the shipping address. The tax location is
 computed from the store's `Spree.config.cart_tax_country_iso` setting.
 
-Note that you can only trust the tax address it is has a country. The other
+Note that you can only trust the tax address if it has a country. The other
 address fields might be empty or raise errors.
 
 <!-- TODO:
