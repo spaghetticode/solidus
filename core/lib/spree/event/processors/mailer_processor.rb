@@ -28,7 +28,7 @@ module Spree
         # subscriptions
         def order_finalize
           self.order_finalize_subscription = Spree::Event.subscribe 'order_finalize' do |event|
-            order = event.payload[:order]
+            order = event.payload[:subject]
             unless order.confirmation_delivered?
               Spree::Config.order_mailer_class.confirm_email(order).deliver_later
               order.update_column(:confirmation_delivered, true)

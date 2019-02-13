@@ -23,14 +23,20 @@ module Spree
           updater.run_hooks
 
           touch :completed_at
-
-          deliver_order_confirmation_email unless confirmation_delivered?
         end
 
         private
 
         def order
           context.order
+        end
+
+        def event_name
+          'order_finalize'
+        end
+
+        def event_subject
+          order
         end
       end
     end
