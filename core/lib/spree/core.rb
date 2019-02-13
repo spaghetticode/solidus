@@ -93,3 +93,4 @@ require 'spree/preferences/static_model_preferences'
 require 'spree/preferences/scoped_store'
 
 require 'spree/event'
+require 'spree/evented_interactor'
