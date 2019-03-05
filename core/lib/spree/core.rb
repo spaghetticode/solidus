@@ -94,3 +94,4 @@ require 'spree/preferences/scoped_store'
 
 require 'spree/event'
 require 'spree/evented_interactor'
+require 'spree/evented_organizer'
