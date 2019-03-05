@@ -158,10 +158,6 @@ module Spree
       unpaid_amount.abs.between?(0, leniency)
     end
 
-    def send_reimbursement_email
-      Spree::Config.reimbursement_mailer_class.reimbursement_email(id).deliver_later
-    end
-
     private
 
     def calculate_total

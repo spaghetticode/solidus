@@ -22,7 +22,6 @@ module Spree
           if unpaid_amount_within_tolerance?
             reimbursed!
             reimbursement_success_hooks.each { |h| h.call reimbursement }
-            send_reimbursement_email
           else
             errored!
             reimbursement_failure_hooks.each { |h| h.call reimbursement }
