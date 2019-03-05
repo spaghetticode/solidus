@@ -37,7 +37,7 @@ module Spree
         end
 
         def reimbursement_perform
-          self.reimbursement_perform_subscription = Spree::Event.subscribe 'spree/reimbursement/interactors/performer' do |event|
+          self.reimbursement_perform_subscription = Spree::Event.subscribe 'spree/reimbursement/interactors/performer_success' do |event|
             reimbursement = event.payload[:subject][:reimbursement]
             if reimbursement.reimbursed?
               Spree::Config.reimbursement_mailer_class.reimbursement_email(reimbursement.id).deliver_later
