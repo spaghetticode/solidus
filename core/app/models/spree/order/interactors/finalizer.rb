@@ -31,7 +31,7 @@ module Spree
           context.order
         end
 
-        def event_name
+        def event_name_success
           'order_finalize'
         end
 

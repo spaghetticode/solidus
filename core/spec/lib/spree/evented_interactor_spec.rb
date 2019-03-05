@@ -33,7 +33,7 @@ RSpec.describe Spree::EventedInteractor do
       notifier.instance_variable_get('@subscribers').clear
       notifier.instance_variable_get('@listeners_for').clear
 
-      Spree::Event.subscribe('c_interaction') { item.success }
+      Spree::Event.subscribe('c_interaction_success') { item.success }
       Spree::Event.subscribe('c_interaction_error') { item.error }
       Spree::Event.subscribe('c_interaction_failure') { item.failure }
     end

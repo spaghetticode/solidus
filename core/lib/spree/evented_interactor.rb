@@ -103,7 +103,7 @@ module Spree
     # The event instrumented when the interactor succeeds
     # Subscriptions to `event_name` will be triggered
     def on_success
-      Spree::Event.instrument event_name, event_payload
+      Spree::Event.instrument event_name_success, event_payload
     end
 
     # The event instrumented when the interactor fails
