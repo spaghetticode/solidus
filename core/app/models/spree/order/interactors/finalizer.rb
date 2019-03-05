@@ -2,41 +2,57 @@ module Spree
   class Order
     module Interactors
       class Finalizer
-        include EventedInteractor
+        include EventedOrganizer
 
-        delegate :all_adjustments, :updater, :shipments, :save!, :touch,
-          :deliver_order_confirmation_email, :confirmation_delivered?, to: :order
+        class FinalizeAdjustments
+          include EventedInteractor
 
-        def call
-          # lock all adjustments (coupon promotions, etc.)
-          all_adjustments.each(&:finalize!)
+          delegate :order, to: :context
 
-          # update payment and shipment(s) states, and save
-          updater.update_payment_state
-          shipments.each do |shipment|
-            shipment.update_state
-            shipment.finalize!
+          def call
+            # lock all adjustments (coupon promotions, etc.)
+            order.all_adjustments.each(&:finalize!)
+
+            # update payment and shipment(s) states, and save
+            order.updater.update_payment_state
           end
-
-          updater.update_shipment_state
-          save!
-          updater.run_hooks
-
-          touch :completed_at
         end
 
-        private
+        class FinalizeShipments
+          include EventedInteractor
 
-        def order
-          context.order
+          delegate :order, to: :context
+
+          def call
+            order.shipments.each do |shipment|
+              shipment.update_state
+              shipment.finalize!
+            end
+
+            order.updater.update_shipment_state
+          end
         end
+
+        class RunHooks
+          include EventedInteractor
+
+          delegate :order, to: :context
+
+          def call
+            order.save!
+            order.updater.run_hooks
+            order.touch :completed_at
+          end
+        end
+
+        organize FinalizeAdjustments, FinalizeShipments, RunHooks
 
         def event_name_success
           'order_finalize'
         end
 
         def event_subject
-          order
+          context.order
         end
       end
     end
