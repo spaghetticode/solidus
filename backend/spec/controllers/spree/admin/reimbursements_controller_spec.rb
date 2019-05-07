@@ -38,7 +38,10 @@ describe Spree::Admin::ReimbursementsController, type: :controller do
     let(:order) { customer_return.order }
     let(:return_item) { customer_return.return_items.first }
     let(:payment) { order.payments.first }
-    before { return_item.receive! }
+    before do
+      return_item.skip_customer_return_processing = true
+      return_item.receive!
+    end
 
     subject do
       post :create, params: { order_id: order.to_param, build_from_customer_return_id: customer_return.id }
