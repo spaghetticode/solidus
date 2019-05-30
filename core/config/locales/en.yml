@@ -97,6 +97,7 @@ en:
         total: Total price
       spree/log_entry:
         details: Message
+        created_at: Date/Time
       spree/option_type:
         name: Name
         presentation: Presentation
@@ -147,6 +148,9 @@ en:
         number: Identifier
         response_code: Transaction ID
         state: State
+      spree/payment_capture_event:
+        created_at: Date/Time
+        amount: Amount
       spree/payment_method:
         active: Active
         auto_capture: Auto Capture
@@ -318,7 +322,6 @@ en:
         country_id: Country
         default: Default
         fulfillable: Fulfillable
-        internal_name: Internal Name
         name: Name
         phone: Phone
         propagate_all_variants: Propagate All Variants
@@ -332,6 +335,7 @@ en:
       spree/store:
         available_locales: Locales Available in the Storefront
         cart_tax_country_iso: Tax Country for Empty Carts
+        code: Slug
         default: Default
         default_currency: Default Currency
         mail_from_address: Mail From Address
@@ -723,49 +727,6 @@ en:
       user:
         one: User
         other: Users
-  devise:
-    confirmations:
-      confirmed: Your account was successfully confirmed. You are now signed in.
-      send_instructions: You will receive an email with instructions about how to
-        confirm your account in a few minutes.
-    failure:
-      inactive: Your account was not activated yet.
-      invalid: Invalid email or password.
-      invalid_token: Invalid authentication token.
-      locked: Your account is locked.
-      timeout: Your session expired, please sign in again to continue.
-      unauthenticated: You need to sign in or sign up before continuing.
-      unconfirmed: You have to confirm your account before continuing.
-    mailer:
-      confirmation_instructions:
-        subject: Confirmation Instructions
-      reset_password_instructions:
-        subject: Reset Password Instructions
-      unlock_instructions:
-        subject: Unlock Instructions
-    oauth_callbacks:
-      failure: Could not authorize you from %{kind} because %{reason}.
-      success: Successfully authorized from %{kind} account.
-    unlocks:
-      send_instructions: You will receive an email with instructions about how to
-        unlock your account in a few minutes.
-      unlocked: Your account was successfully unlocked. You are now signed in.
-    user_passwords:
-      user:
-        cannot_be_blank: Your password cannot be blank.
-        send_instructions: You will receive an email with instructions about how to
-          reset your password in a few minutes.
-        updated: Your password was changed successfully. You are now signed in.
-    user_registrations:
-      destroyed: Bye! Your account was successfully cancelled. We hope to see you
-        again soon.
-      inactive_signed_up: You have signed up successfully. However, we could not sign
-        you in because your account is %{reason}.
-      signed_up: Welcome! You have signed up successfully.
-      updated: You updated your account successfully.
-    user_sessions:
-      signed_in: Signed in successfully.
-      signed_out: Signed out successfully.
   errors:
     messages:
       already_confirmed: was already confirmed
@@ -846,6 +807,9 @@ en:
     adjustment_type: Adjustment type
     adjustments: Adjustments
     admin:
+      api:
+        key_cleared: Key cleared
+        key_generated: Key generated
       images:
         index:
           choose_files: Choose files to upload
@@ -1417,8 +1381,10 @@ en:
       spree/store:
         available_locales: This determines which locales are available for your customers
           to choose from in the storefront.
-        cart_tax_country_iso: 'This determines which country is used for taxes on
-          carts (orders which don''t yet have an address).<br/> Default: None.'
+        cart_tax_country_iso: "This determines which country is used for taxes on carts
+          (orders which don't yet have an address).<br/> Default: None."
+        code: 'An identifier for your store. Developers may need this value if you operate
+          multiple storefronts.'
       spree/tax_rate:
         validity_period: This determines the validity period within which the tax
           rate is valid and will be applied to eligible items. <br /> If no start
@@ -1470,7 +1436,6 @@ en:
       quantity.
     intercept_email_address: Intercept Email Address
     intercept_email_instructions: Override email recipient and replace with this address.
-    internal_name: Internal Name
     invalid_exchange_variant: Invalid exchange variant.
     invalid_payment_method_type: Invalid payment method type.
     invalid_promotion_action: Invalid promotion action.
@@ -1984,7 +1949,6 @@ en:
       ready: Ready
       shipped: Shipped
     shipment_transfer_error: There was an error transferring variants
-    shipment_transfer_success: Variants successfully transferred
     shipments: Shipments
     shipped: Shipped
     shipped_at: Shipped At
@@ -2050,7 +2014,6 @@ en:
       order to manage stock.
     stock_movements: Stock Movements
     stock_movements_for_stock_location: Stock Movements for %{stock_location_name}
-    stock_not_below_zero: Stock must not be below zero.
     stock_successfully_transferred: Stock was successfully transferred between locations.
     stop: Stop
     store: Store

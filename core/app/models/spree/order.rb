@@ -392,7 +392,7 @@ module Spree
     end
 
     def refund_total
-      payments.flat_map(&:refunds).sum(&:amount)
+      refunds.sum(&:amount)
     end
 
     def name
@@ -434,18 +434,13 @@ module Spree
 
       touch :completed_at
 
-      deliver_order_confirmation_email unless confirmation_delivered?
+      Spree::Event.fire 'order_finalized', order: self
     end
 
     def fulfill!
       shipments.each { |shipment| shipment.update_state if shipment.persisted? }
       updater.update_shipment_state
       save!
-    end
-
-    def deliver_order_confirmation_email
-      Spree::Config.order_mailer_class.confirm_email(self).deliver_later
-      update_column(:confirmation_delivered, true)
     end
 
     # Helper methods for checkout steps
@@ -765,7 +760,7 @@ module Spree
 
     def record_ip_address(ip_address)
       if last_ip_address != ip_address
-        update_attributes!(last_ip_address: ip_address)
+        update_column(:last_ip_address, ip_address)
       end
     end
 

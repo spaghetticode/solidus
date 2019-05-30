@@ -59,6 +59,7 @@ describe 'Users', type: :feature do
 
     it "can sort asc" do
       within_table(table_id) do
+        expect(page).to have_selector '.sort_link.asc'
         expect(page).to have_text text_match_1
         expect(page).to have_text text_match_2
         expect(text_match_1).to appear_before text_match_2
@@ -69,7 +70,10 @@ describe 'Users', type: :feature do
       within_table(table_id) do
         # Ransack adds a ▲ to the sort link. With exact match Capybara is not able to find that link
         click_link sort_link, exact: false
+      end
 
+      within_table(table_id) do
+        expect(page).to have_selector '.sort_link.desc'
         expect(page).to have_text text_match_1
         expect(page).to have_text text_match_2
         expect(text_match_2).to appear_before text_match_1
@@ -281,6 +285,24 @@ describe 'Users', type: :feature do
         expect(user_a.reload.spree_api_key).not_to eq old_key
 
         expect(page).to have_content('Key: (hidden)')
+      end
+    end
+  end
+
+  context 'deleting users' do
+    let!(:an_user) { create(:user_with_addresses, email: 'an_user@example.com') }
+    let!(:order) { create(:completed_order_with_totals, user_id: an_user.id) }
+
+    context 'if an user has placed orders' do
+      before do
+        visit spree.admin_path
+        click_link 'Users'
+      end
+
+      it "can't be deleted" do
+        within "#spree_user_#{an_user.id}" do
+          expect(page).not_to have_selector('.fa-trash')
+        end
       end
     end
   end

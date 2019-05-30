@@ -211,6 +211,26 @@ describe "Checkout", type: :feature, inaccessible: true do
     end
   end
 
+  context "when order has only a void payment" do
+    let(:order) { Spree::TestingSupport::OrderWalkthrough.up_to(:payment) }
+
+    before do
+      user = create(:user)
+      order.user = user
+      order.recalculate
+
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
+      allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
+    end
+
+    it "does not allow successful order submission" do
+      visit spree.checkout_path
+      order.payments.first.update state: :void
+      click_button 'Place Order'
+      expect(page).to have_current_path spree.checkout_state_path(:payment)
+    end
+  end
+
   # Regression test for https://github.com/spree/spree/issues/2694 and https://github.com/spree/spree/issues/4117
   context "doesn't allow bad credit card numbers" do
     let!(:payment_method) { create(:credit_card_payment_method) }
@@ -338,12 +358,11 @@ describe "Checkout", type: :feature, inaccessible: true do
     it "selects first source available and customer moves on" do
       expect(find("#use_existing_card_yes")).to be_checked
 
-      expect {
-        click_on "Save and Continue"
-      }.not_to change { Spree::CreditCard.count }
-
+      click_on "Save and Continue"
       click_on "Place Order"
       expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content("Ending in #{credit_card.last_digits}")
     end
 
     it "allows user to enter a new source" do
@@ -354,14 +373,10 @@ describe "Checkout", type: :feature, inaccessible: true do
       fill_in "card_expiry", with: '04 / 20'
       fill_in "Card Code", with: '123'
 
-      expect {
-        click_on "Save and Continue"
-      }.to change { Spree::CreditCard.count }.by 1
-
-      expect(Spree::CreditCard.last.address).to be_present
-
+      click_on "Save and Continue"
       click_on "Place Order"
       expect(page).to have_current_path(spree.order_path(Spree::Order.last))
+      expect(page).to have_content('Ending in 1111')
     end
   end
 
