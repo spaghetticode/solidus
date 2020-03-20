@@ -26,7 +26,7 @@ module Spree
           update_shipments
           update_shipment_state
         end
-        run_hooks
+        update_hooks.any? && run_hooks
         Spree::Event.fire 'order_recalculated', order: order
         persist_totals
       end
